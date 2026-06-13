@@ -1,0 +1,25 @@
+[build-system]
+requires = [
+    "setuptools>=68",
+    "wheel",
+    "Cython>=3.0",
+    "numpy>=1.26"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cclassify"
+version = "0.1.0"
+description = "Python package wrapping C implementations of classical classification algorithms"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [
+    { name = "Suren Mnatsakanyan" }
+]
+dependencies = [
+    "numpy>=1.26"
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
