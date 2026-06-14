@@ -2,6 +2,13 @@
 #include <stdlib.h>
 #include <math.h>
 
+/*
+ * Compute the logistic sigmoid function.
+ *
+ * z : input scalar
+ *
+ * returns 1 / (1 + exp(-z))
+ */
 double sigmoid(double z)
 {
     if (z >= 0.0)
@@ -16,6 +23,18 @@ double sigmoid(double z)
     }
 }
 
+/*
+ * Fit a binary logistic regression model using batch gradient descent.
+ *
+ * X             : flattened row-major matrix of shape (n_samples, n_features)
+ * y             : binary labels of length n_samples, encoded as 0 or 1
+ * w             : output weight vector of length n_features
+ * b             : output bias term
+ * n_samples     : number of samples
+ * n_features    : number of features
+ * learning_rate : gradient descent step size
+ * n_iter        : number of training iterations
+ */
 void logistic_fit_binary(
     const double *X,
     const long *y,
@@ -81,6 +100,16 @@ void logistic_fit_binary(
     free(grad_w);
 }
 
+/*
+ * Predict probabilities for the positive class in binary logistic regression.
+ *
+ * X          : flattened row-major matrix of shape (n_samples, n_features)
+ * w          : fitted weight vector of length n_features
+ * b          : fitted bias term
+ * out        : output probabilities of length n_samples
+ * n_samples  : number of samples
+ * n_features : number of features
+ */
 void logistic_predict_proba_binary(
     const double *X,
     const double *w,
@@ -103,6 +132,17 @@ void logistic_predict_proba_binary(
     }
 }
 
+/*
+ * Predict binary class labels from a fitted logistic regression model.
+ *
+ * X          : flattened row-major matrix of shape (n_samples, n_features)
+ * w          : fitted weight vector of length n_features
+ * b          : fitted bias term
+ * out        : output labels of length n_samples
+ * n_samples  : number of samples
+ * n_features : number of features
+ * threshold  : probability threshold used for classification
+ */
 void logistic_predict_binary(
     const double *X,
     const double *w,

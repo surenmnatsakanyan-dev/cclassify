@@ -3,7 +3,29 @@ from ._naive_bayes import fit_nb_flat, predict_nb_flat
 
 
 class GaussianNB:
+    """
+    Gaussian Naive Bayes classifier.
+
+    This classifier assumes that each feature is conditionally Gaussian
+    within each class and that features are conditionally independent
+    given the class.
+
+    During fitting, the model estimates:
+    - class prior probabilities,
+    - class-wise feature means,
+    - class-wise feature variances.
+
+    Notes
+    -----
+    Prediction is performed in log-space for numerical stability.
+    The current implementation expects class labels to be encoded as
+    0, 1, ..., n_classes - 1.
+    """
+
     def __init__(self):
+        """
+        Initialize the Gaussian Naive Bayes classifier.
+        """        
         self.class_priors_ = None
         self.means_ = None
         self.variances_ = None
@@ -12,6 +34,28 @@ class GaussianNB:
         self.classes_ = None
 
     def fit(self, X, y):
+        """
+        Fit the Gaussian Naive Bayes model.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Training feature matrix.
+        y : array-like of shape (n_samples,)
+            Training labels encoded as 0, 1, ..., n_classes - 1.
+
+        Returns
+        -------
+        self : GaussianNB
+            Fitted classifier.
+
+        Raises
+        ------
+        ValueError
+            If X is not 2D, y is not 1D, if the number of samples
+            does not match, if y is empty, or if class labels are not
+            encoded as consecutive integers starting at zero.
+        """        
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y, dtype=np.int64)
 
@@ -55,6 +99,25 @@ class GaussianNB:
         return self
 
     def predict(self, X):
+        """
+        Predict class labels for test samples.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Test feature matrix.
+
+        Returns
+        -------
+        ndarray of shape (n_samples,)
+            Predicted class labels.
+
+        Raises
+        ------
+        ValueError
+            If fit has not been called, if X is not 2D, or if the number
+            of features does not match the fitted model.
+        """        
         if self.class_priors_ is None:
             raise ValueError("Call fit before predict.")
 

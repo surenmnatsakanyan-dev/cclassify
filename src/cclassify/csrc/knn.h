@@ -3,6 +3,14 @@
 
 #include <stddef.h>
 
+/*
+ * Compute squared Euclidean distance between two feature vectors.
+ *
+ * a, b       : input vectors of length n_features
+ * n_features : number of features
+ *
+ * returns the squared distance sum_j (a[j] - b[j])^2
+ */
 double squared_euclidean_distance(
     const double *a,
     const double *b,
@@ -22,7 +30,6 @@ double squared_euclidean_distance(
  * n_features : number of features
  * k: neighborhood parameter
  */
-
 void knn_predict(
     const double *X_train,
     const long *y_train,

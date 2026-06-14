@@ -3,7 +3,28 @@ from ._knn import predict_knn_flat
 
 
 class KNNClassifier:
+    """
+    K-nearest-neighbors classifier.
+
+    Parameters
+    ----------
+    k : int, default=3
+        Number of nearest neighbors used for prediction.
+    """
     def __init__(self, k=3):
+        """
+        Initialize the K-nearest-neighbors classifier.
+
+        Parameters
+        ----------
+        k : int, default=3
+            Number of nearest neighbors used for prediction.
+
+        Raises
+        ------
+        ValueError
+            If k is not positive.
+        """        
         if k <= 0:
             raise ValueError("k must be positive.")
         self.k = k
@@ -13,6 +34,28 @@ class KNNClassifier:
         self.n_features = None
 
     def fit(self, X, y):
+        """
+        Store the training data.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Training feature matrix.
+        y : array-like of shape (n_samples,)
+            Training labels.
+
+        Returns
+        -------
+        self : KNNClassifier
+            Fitted classifier.
+
+        Raises
+        ------
+        ValueError
+            If X is not 2D, y is not 1D, if the number of samples
+            does not match, or if k is larger than the number of
+            training samples.
+        """ 
         X = np.asarray(X, dtype=np.float64)
         y = np.asarray(y, dtype=np.int64)
 
@@ -34,6 +77,25 @@ class KNNClassifier:
         return self
 
     def predict(self, X):
+        """
+        Predict class labels for test samples.
+
+        Parameters
+        ----------
+        X : array-like of shape (n_samples, n_features)
+            Test feature matrix.
+
+        Returns
+        -------
+        ndarray of shape (n_samples,)
+            Predicted class labels.
+
+        Raises
+        ------
+        ValueError
+            If fit has not been called, if X is not 2D, or if the number
+            of features does not match the training data.
+        """        
         if self.X_train is None:
             raise ValueError("Call fit before predict().")
 
