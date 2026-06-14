@@ -22,7 +22,8 @@ dist/
 *.o
 *.obj
 *.a
-
+src/cclassify/_*.c
+src/cclassify/*.so
 # Pytest
 .pytest_cache/
 
