@@ -1,6 +1,6 @@
 import numpy as np
 from cclassify.naive_bayes import GaussianNB
-
+import pytest
 
 def test_gaussian_nb_simple():
     X = np.array([
@@ -40,3 +40,29 @@ def test_gaussian_nb_train_test_split():
     pred = clf.predict(X_test)
 
     assert pred.tolist() == [0, 0, 1, 1]    
+
+def test_gaussian_nb_invalid_labels():
+    X = np.array([[1.0, 1.0], [2.0, 2.0]])
+    y = np.array([1, 2])
+
+    clf = GaussianNB()
+    with pytest.raises(ValueError):
+        clf.fit(X, y)
+
+
+def test_gaussian_nb_predict_before_fit():
+    clf = GaussianNB()
+    X_test = np.array([[1.0, 1.0]])
+    with pytest.raises(ValueError):
+        clf.predict(X_test)
+
+
+def test_gaussian_nb_wrong_feature_count():
+    X_train = np.array([[1.0, 1.0], [2.0, 2.0]])
+    y_train = np.array([0, 1])
+
+    clf = GaussianNB().fit(X_train, y_train)
+
+    X_test = np.array([[1.0, 1.0, 3.0]])
+    with pytest.raises(ValueError):
+        clf.predict(X_test)    
